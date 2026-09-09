@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Paloma_MovePlayer : MonoBehaviour
+public class MovePlayer : MonoBehaviour
 {
     private NIS inputActions;
 

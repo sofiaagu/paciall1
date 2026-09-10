@@ -21,7 +21,7 @@ public class MonoEscalar : MonoBehaviour
 
     // Guardar la rotación normal
     private Quaternion rotacionNormal;
-
+    //hola
 
     private void Awake()
     {

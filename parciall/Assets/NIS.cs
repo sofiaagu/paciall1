@@ -467,7 +467,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a330b985-1ca1-4421-9077-bf8358a35191"",
-                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",

@@ -314,7 +314,7 @@ MonoBehaviour:
   players:
   - {fileID: 1660150076}
   - {fileID: 8999338504520237797}
-  - {fileID: 0}
+  - {fileID: 1411371693}
 --- !u!65 &1080736574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -635,6 +635,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917db159ea999a74f809f74bcbd0a1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactable
+--- !u!4 &1411371693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4680172555307884779, guid: 18720b066f1bae5429c9c52b18584dc1, type: 3}
+  m_PrefabInstance: {fileID: 2115414388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1485971418
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,11 +793,11 @@ MonoBehaviour:
   players:
   - {fileID: 1660150076}
   - {fileID: 8999338504520237797}
-  - {fileID: 0}
+  - {fileID: 1411371693}
   currentSection: {fileID: 339925587}
-  distance: 10
+  distance: 14.89
   angleX: 45
-  angleY: 45
+  angleY: 15.6
   moveSpeed: 3
   targetHeight: 0
 --- !u!1 &1568413555

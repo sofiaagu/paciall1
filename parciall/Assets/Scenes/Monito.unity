@@ -1691,7 +1691,7 @@ GameObject:
   - component: {fileID: 1425554145}
   - component: {fileID: 1425554144}
   - component: {fileID: 1425554147}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CajaVenado
   m_TagString: Caja
   m_Icon: {fileID: 0}
@@ -2238,6 +2238,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 96f9631a9bbfb32438ec9fda61472317, type: 2}
+    - target: {fileID: 7144045625425863789, guid: 252ba5fa5d8167e42af72cf97baa830e, type: 3}
+      propertyPath: cajaLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

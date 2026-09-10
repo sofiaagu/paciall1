@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 662346950}
   - component: {fileID: 662346949}
   - component: {fileID: 662346948}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: suelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,6 +727,12 @@ MonoBehaviour:
   speed: 5
   fuerzaSalto: 5
   controlScheme: Keyboard_arrows
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckRadius: 0.25
+  groundCheckDistance: 0.08
+  animator: {fileID: 1886533503}
 --- !u!54 &1886533501
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -754,6 +760,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &1886533503 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6788538757290762327, guid: ad4137f595ec8e2449cacca9df7d3735, type: 3}
+  m_PrefabInstance: {fileID: 418170337}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

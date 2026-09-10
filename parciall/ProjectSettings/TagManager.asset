@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Escalera
   - Mono
+  - 'Venado '
+  - Serpiente
+  - Paloma
+  - Caja
   layers:
   - Default
   - TransparentFX

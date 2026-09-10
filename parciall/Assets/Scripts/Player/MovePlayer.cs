@@ -24,6 +24,7 @@ public class MovePlayer : MonoBehaviour
     public Animator animator;
 
     private Vector2 moveInput;
+
     private Rigidbody rb;
     private Collider playerCollider;
 
@@ -34,7 +35,6 @@ public class MovePlayer : MonoBehaviour
     {
         inputActions = new NIS();
 
-        // Utiliza únicamente los controles del personaje.
         inputActions.bindingMask =
             InputBinding.MaskByGroup(controlScheme);
 
@@ -46,10 +46,19 @@ public class MovePlayer : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
-        // Evita que el personaje se tumbe por las colisiones.
+        // El jugador solo puede rotar mediante el código.
         rb.constraints =
             RigidbodyConstraints.FreezeRotationX |
             RigidbodyConstraints.FreezeRotationZ;
+
+        rb.interpolation =
+            RigidbodyInterpolation.Interpolate;
+
+        rb.collisionDetectionMode =
+            CollisionDetectionMode.Continuous;
+
+        // Evita que las colisiones produzcan giros físicos.
+        rb.angularDamping = 100f;
     }
 
     private void OnEnable()
@@ -82,10 +91,10 @@ public class MovePlayer : MonoBehaviour
         if (!isGrounded)
             return;
 
-        // Reinicia la velocidad vertical para evitar
-        // acumulación de fuerza.
         Vector3 velocity = rb.linearVelocity;
+
         velocity.y = 0f;
+
         rb.linearVelocity = velocity;
 
         rb.AddForce(
@@ -103,35 +112,68 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // ============================================
+        // ELIMINAR ROTACIÓN PRODUCIDA POR COLISIONES
+        // ============================================
+
+        rb.angularVelocity = Vector3.zero;
+
+        // ============================================
+        // MOVIMIENTO
+        // ============================================
+
         Vector3 movement = new Vector3(
             moveInput.x,
             0f,
             moveInput.y
         );
 
-        movement = movement.normalized;
+        movement = Vector3.ClampMagnitude(
+            movement,
+            1f
+        );
 
-        if (movement.magnitude > 0.01f)
+        Vector3 velocity = rb.linearVelocity;
+
+        if (movement.sqrMagnitude > 0.001f)
         {
-            // Movimiento físico
-            Vector3 newPosition =
-                rb.position +
-                movement * speed * Time.fixedDeltaTime;
+            velocity.x = movement.x * speed;
+            velocity.z = movement.z * speed;
+        }
+        else
+        {
+            velocity.x = 0f;
+            velocity.z = 0f;
+        }
 
-            rb.MovePosition(newPosition);
+        // Mantener gravedad y salto.
+        rb.linearVelocity = velocity;
 
-            // Rotación hacia la dirección de movimiento
+        // ============================================
+        // ROTACIÓN CONTROLADA POR EL JUGADOR
+        // ============================================
+
+        if (movement.sqrMagnitude > 0.001f)
+        {
             Quaternion targetRotation =
-                Quaternion.LookRotation(movement);
+                Quaternion.LookRotation(
+                    movement,
+                    Vector3.up
+                );
 
-            rb.MoveRotation(
+            Quaternion newRotation =
                 Quaternion.RotateTowards(
                     rb.rotation,
                     targetRotation,
-                    rotationSpeed * Time.fixedDeltaTime
-                )
-            );
+                    rotationSpeed *
+                    Time.fixedDeltaTime
+                );
+
+            rb.MoveRotation(newRotation);
         }
+
+        // Asegurar que nunca quede rotación física.
+        rb.angularVelocity = Vector3.zero;
     }
 
     private void Update()
@@ -145,20 +187,23 @@ public class MovePlayer : MonoBehaviour
         if (playerCollider == null)
             return;
 
-        Bounds bounds = playerCollider.bounds;
+        Bounds bounds =
+            playerCollider.bounds;
 
-        Vector3 groundCheckPosition = new Vector3(
-            bounds.center.x,
-            bounds.min.y + groundCheckDistance,
-            bounds.center.z
-        );
+        Vector3 groundCheckPosition =
+            new Vector3(
+                bounds.center.x,
+                bounds.min.y + groundCheckDistance,
+                bounds.center.z
+            );
 
-        isGrounded = Physics.CheckSphere(
-            groundCheckPosition,
-            groundCheckRadius,
-            groundLayer,
-            QueryTriggerInteraction.Ignore
-        );
+        isGrounded =
+            Physics.CheckSphere(
+                groundCheckPosition,
+                groundCheckRadius,
+                groundLayer,
+                QueryTriggerInteraction.Ignore
+            );
     }
 
     private void UpdateAnimations()
@@ -166,27 +211,40 @@ public class MovePlayer : MonoBehaviour
         if (animator == null)
             return;
 
-        float movementAmount = moveInput.magnitude;
+        float movementAmount =
+            moveInput.magnitude;
 
-        animator.SetFloat("Speed", movementAmount);
-        animator.SetBool("Grounded", isGrounded);
+        animator.SetFloat(
+            "Speed",
+            movementAmount
+        );
+
+        animator.SetBool(
+            "Grounded",
+            isGrounded
+        );
     }
 
     private void OnDrawGizmosSelected()
     {
         if (playerCollider == null)
-            playerCollider = GetComponent<Collider>();
+        {
+            playerCollider =
+                GetComponent<Collider>();
+        }
 
         if (playerCollider == null)
             return;
 
-        Bounds bounds = playerCollider.bounds;
+        Bounds bounds =
+            playerCollider.bounds;
 
-        Vector3 groundCheckPosition = new Vector3(
-            bounds.center.x,
-            bounds.min.y + groundCheckDistance,
-            bounds.center.z
-        );
+        Vector3 groundCheckPosition =
+            new Vector3(
+                bounds.center.x,
+                bounds.min.y + groundCheckDistance,
+                bounds.center.z
+            );
 
         Gizmos.color = Color.yellow;
 

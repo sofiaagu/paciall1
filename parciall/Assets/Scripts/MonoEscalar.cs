@@ -21,8 +21,6 @@ public class MonoEscalar : MonoBehaviour
 
     // Guardar la rotación normal
     private Quaternion rotacionNormal;
-    [Header("Posición en la escalera")]
-    public float distanciaEscalera = 0.2f;
 
 
     private void Awake()
@@ -118,12 +116,13 @@ public class MonoEscalar : MonoBehaviour
         if (rb != null)
         {
             rb.useGravity = false;
+
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
 
         // ==========================================
-        // ROTAR -90 EN X
+        // ROTACIÓN EXACTA
         // ==========================================
 
         Vector3 rotacionActual = transform.eulerAngles;
@@ -133,27 +132,8 @@ public class MonoEscalar : MonoBehaviour
             rotacionActual.y,
             rotacionActual.z
         );
-
-        // ==========================================
-        // PEGAR AL MONO A LA ESCALERA
-        // ==========================================
-
-        RaycastHit hit;
-
-        // Lanzamos un rayo hacia adelante
-        if (Physics.Raycast(
-            transform.position,
-            transform.forward,
-            out hit,
-            5f))
-        {
-            if (hit.collider.CompareTag("Escalera"))
-            {
-                transform.position =
-                    hit.point - transform.forward * distanciaEscalera;
-            }
-        }
     }
+
 
     // =====================================================
     // DEJAR DE ESCALAR

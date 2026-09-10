@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class VenadoEmpujar : MonoBehaviour
 {
     [Header("Control")]
-    public string controlScheme = "Venado";
+    public string controlScheme = "Gamepad";
 
     [Header("Configuración del empuje")]
     public float distanciaEmpuje = 1.5f;

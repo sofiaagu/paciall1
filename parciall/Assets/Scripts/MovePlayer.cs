@@ -28,6 +28,7 @@ public class MovePlayer : MonoBehaviour
     private Collider playerCollider;
 
     private bool isGrounded;
+    public bool IsGrounded => isGrounded;
 
     private void Awake()
     {

@@ -9,50 +9,45 @@ public class MonoEscalar : MonoBehaviour
     [Header("Control Scheme")]
     public string controlScheme = "Keyboard_WASD";
 
+    [Header("Corrección al escalar")]
+    public float ajusteAltura = 0.02f;
+
     private NIS inputActions;
     private Rigidbody rb;
 
     private bool enEscalera = false;
     private bool escalando = false;
 
-    // Referencia al movimiento normal del mono
+    // Escalera actual
+    private Transform escaleraActual;
+
+    // Movimiento normal
     private MovePlayer movimientoNormal;
 
     // Movimiento recibido desde NIS
     private Vector2 moveInput;
 
-    [Header("Corrección al escalar")]
-    public float ajusteAltura = 0.02f;
-
     private void Awake()
     {
-        // Crear las acciones de entrada
         inputActions = new NIS();
 
-        // Utilizar solamente el Control Scheme seleccionado
         inputActions.bindingMask =
             InputBinding.MaskByGroup(controlScheme);
 
-        // Obtener Rigidbody del personaje
         rb = GetComponent<Rigidbody>();
 
-        // Obtener el script de movimiento normal
         movimientoNormal = GetComponent<MovePlayer>();
     }
-
 
     private void OnEnable()
     {
         inputActions.Player.Enable();
 
-        // Movimiento W, A, S, D
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
 
-        // Ability = E
         inputActions.Player.Ability.performed += OnAbility;
     }
-
 
     private void OnDisable()
     {
@@ -64,25 +59,26 @@ public class MonoEscalar : MonoBehaviour
         inputActions.Player.Disable();
     }
 
+    // ==========================================
+    // MOVIMIENTO
+    // ==========================================
 
-    // Recibe el movimiento de W, A, S y D
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
     }
 
+    // ==========================================
+    // HABILIDAD DE ESCALAR
+    // ==========================================
 
-    // Se ejecuta cuando presionamos E
     private void OnAbility(InputAction.CallbackContext context)
     {
-        // Si NO estamos tocando una escalera,
-        // E no hace nada.
         if (!enEscalera)
         {
             return;
         }
 
-        // Si ya está escalando, deja de escalar.
         if (escalando)
         {
             DejarDeEscalar();
@@ -93,8 +89,10 @@ public class MonoEscalar : MonoBehaviour
         }
     }
 
+    // ==========================================
+    // COMENZAR A ESCALAR
+    // ==========================================
 
-    // ACTIVAR ESCALADA
     private void ComenzarAEscalar()
     {
         if (!enEscalera)
@@ -102,7 +100,7 @@ public class MonoEscalar : MonoBehaviour
 
         escalando = true;
 
-        Debug.Log("COMENZÓ A ESCALAR");
+        Debug.Log("🐒 COMENZÓ A ESCALAR");
 
         // Desactivar movimiento normal
         if (movimientoNormal != null)
@@ -110,7 +108,7 @@ public class MonoEscalar : MonoBehaviour
             movimientoNormal.enabled = false;
         }
 
-        // Desactivar gravedad
+        // Quitar gravedad
         if (rb != null)
         {
             rb.useGravity = false;
@@ -120,34 +118,41 @@ public class MonoEscalar : MonoBehaviour
         }
 
         // ==========================================
-        // ROTAR EL MONO
+        // ORIENTAR SEGÚN LA ESCALERA
         // ==========================================
 
-        Vector3 rotacionActual = transform.eulerAngles;
+        if (escaleraActual != null)
+        {
+            Vector3 rotacionEscalera =
+                escaleraActual.eulerAngles;
 
-        transform.rotation = Quaternion.Euler(
-            -90f,
-            rotacionActual.y,
-            rotacionActual.z
-        );
+            transform.rotation =
+                Quaternion.Euler(
+                    -90f,
+                    rotacionEscalera.y,
+                    rotacionEscalera.z
+                );
 
-        // ==========================================
-        // ACTUALIZAR COLLIDER
-        // ==========================================
+            Debug.Log(
+                "Mono orientado según escalera. Y = " +
+                rotacionEscalera.y
+            );
+        }
 
         Physics.SyncTransforms();
 
         // ==========================================
-        // SACAR EL COLLIDER DEL PISO
+        // CORRECCIÓN DE ALTURA
         // ==========================================
 
-        Collider colliderMono = GetComponent<Collider>();
+        Collider colliderMono =
+            GetComponent<Collider>();
 
         if (colliderMono != null)
         {
-            float parteInferior = colliderMono.bounds.min.y;
+            float parteInferior =
+                colliderMono.bounds.min.y;
 
-            // Si la parte inferior está debajo de Y = 0
             if (parteInferior < 0f)
             {
                 float cuantoEstaEnterrado =
@@ -164,87 +169,189 @@ public class MonoEscalar : MonoBehaviour
         }
     }
 
-
-    // DESACTIVAR ESCALADA
-    private void DejarDeEscalar()
-    {
-        escalando = false;
-
-        Debug.Log("El mono dejó de escalar");
-
-        // Activar nuevamente movimiento normal
-        if (movimientoNormal != null)
-        {
-            movimientoNormal.enabled = true;
-        }
-
-        // Activar nuevamente gravedad
-        if (rb != null)
-        {
-            rb.useGravity = true;
-        }
-    }
-
+    // ==========================================
+    // MOVIMIENTO AL ESCALAR
+    // ==========================================
 
     private void Update()
     {
-        // Si no está escalando,
-        // este script no hace nada.
         if (!escalando)
         {
             return;
         }
 
         /*
-         * Mientras escala:
-         *
          * W = subir
          * S = bajar
          *
-         * A y D no se utilizan para subir/bajar.
+         * A y D no se utilizan.
          */
 
-        float movimientoVertical = moveInput.y;
+        float movimientoVertical =
+            moveInput.y;
 
-        Vector3 movimiento = new Vector3(
-            0f,
-            movimientoVertical,
-            0f
-        );
+        Vector3 movimiento =
+            new Vector3(
+                0f,
+                movimientoVertical,
+                0f
+            );
 
         transform.Translate(
-            movimiento * velocidadEscalada * Time.deltaTime,
+            movimiento *
+            velocidadEscalada *
+            Time.deltaTime,
             Space.World
         );
     }
 
+    // ==========================================
+    // SALIR POR ARRIBA
+    // ==========================================
 
-    // DETECTAR CUANDO ENTRA A LA ESCALERA
-    private void OnTriggerEnter(Collider other)
+    public void SalirPorArriba(Transform puntoSalida)
     {
-        if (CompareTag("Mono") && other.CompareTag("Escalera"))
-        {
-            enEscalera = true;
+        if (!escalando)
+            return;
 
-            Debug.Log("El Mono detectó una escalera");
+        // ==========================================
+        // COLOCAR AL MONO EN LA PLATAFORMA
+        // ==========================================
+
+        if (puntoSalida != null)
+        {
+            transform.position =
+                puntoSalida.position;
+
+            // La rotación del PuntoSalida
+            // determina hacia dónde queda mirando.
+            transform.rotation =
+                puntoSalida.rotation;
+
+            Debug.Log(
+                "🐒 Mono colocado en el PuntoSalida"
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "⚠️ No se asignó PuntoSalida"
+            );
+        }
+
+        // ==========================================
+        // TERMINAR ESCALADA
+        // ==========================================
+
+        escalando = false;
+        enEscalera = false;
+
+        // Activar movimiento normal
+        if (movimientoNormal != null)
+        {
+            movimientoNormal.enabled = true;
+        }
+
+        // Activar gravedad
+        if (rb != null)
+        {
+            rb.useGravity = true;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        escaleraActual = null;
+
+        Physics.SyncTransforms();
+
+        Debug.Log(
+            "🐒 ESCALADA TERMINADA"
+        );
+    }
+
+    // ==========================================
+    // DEJAR DE ESCALAR MANUALMENTE
+    // ==========================================
+
+    private void DejarDeEscalar()
+    {
+        escalando = false;
+
+        Debug.Log(
+            "🐒 El mono dejó de escalar"
+        );
+
+        if (movimientoNormal != null)
+        {
+            movimientoNormal.enabled = true;
+        }
+
+        if (rb != null)
+        {
+            rb.useGravity = true;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 
+    // ==========================================
+    // DETECTAR ENTRADA A LA ESCALERA
+    // ==========================================
 
-    // DETECTAR CUANDO SALE DE LA ESCALERA
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!CompareTag("Mono"))
+            return;
+
+        if (!other.CompareTag("Escalera"))
+            return;
+
+        enEscalera = true;
+
+        escaleraActual =
+            other.transform;
+
+        Debug.Log(
+            "🐒 El Mono detectó una escalera"
+        );
+
+        Debug.Log(
+            "Rotación de la escalera: " +
+            escaleraActual.eulerAngles
+        );
+    }
+
+    // ==========================================
+    // DETECTAR SALIDA DE LA ESCALERA
+    // ==========================================
+
     private void OnTriggerExit(Collider other)
     {
-        if (CompareTag("Mono") && other.CompareTag("Escalera"))
+        if (!CompareTag("Mono"))
+            return;
+
+        if (!other.CompareTag("Escalera"))
+            return;
+
+        /*
+         * Si está escalando NO detenemos
+         * la escalada.
+         *
+         * El FinalEscalera se encargará
+         * de terminarla.
+         */
+
+        if (!escalando)
         {
             enEscalera = false;
 
-            // Si estaba escalando, deja de escalar
-            if (escalando)
-            {
-                DejarDeEscalar();
-            }
+            escaleraActual = null;
 
-            Debug.Log("El Mono salió de la escalera");
+            Debug.Log(
+                "🐒 El Mono salió de la escalera"
+            );
         }
     }
 }

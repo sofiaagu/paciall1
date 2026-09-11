@@ -6,9 +6,10 @@ public class MainMenuManager : MonoBehaviour
     [Header("Paneles de la UI")]
     public GameObject panelMainMenu;
     public GameObject panelExplicacion;
+    public GameObject panelHistorieta; // Nueva casilla para el panel de la historieta
 
     [Header("Nombre de la Escena 3D")]
-    public string nombreEscenaJuego = "PruebasCata"; // Debe llamarse exacto como tu escena 3D
+    public string nombreEscenaJuego = "PruebasCata"; 
 
     private void Start()
     {
@@ -17,14 +18,23 @@ public class MainMenuManager : MonoBehaviour
 
     public void MostrarMainMenu()
     {
-        panelMainMenu.SetActive(true);
-        panelExplicacion.SetActive(false);
+        if (panelMainMenu != null) panelMainMenu.SetActive(true);
+        if (panelExplicacion != null) panelExplicacion.SetActive(false);
+        if (panelHistorieta != null) panelHistorieta.SetActive(false);
     }
 
     public void MostrarExplicacion()
     {
-        panelMainMenu.SetActive(false);
-        panelExplicacion.SetActive(true);
+        if (panelMainMenu != null) panelMainMenu.SetActive(false);
+        if (panelExplicacion != null) panelExplicacion.SetActive(true);
+        if (panelHistorieta != null) panelHistorieta.SetActive(false);
+    }
+
+    public void MostrarHistorieta()
+    {
+        if (panelMainMenu != null) panelMainMenu.SetActive(false);
+        if (panelExplicacion != null) panelExplicacion.SetActive(false);
+        if (panelHistorieta != null) panelHistorieta.SetActive(true);
     }
 
     public void CargarJuego()

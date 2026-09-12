@@ -291,7 +291,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""9443d80d-f5db-4ebf-b95c-2a41a35fa8c6"",
-                    ""path"": ""<Keyboard>/numpad2"",
+                    ""path"": ""<Keyboard>/numpad5"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",

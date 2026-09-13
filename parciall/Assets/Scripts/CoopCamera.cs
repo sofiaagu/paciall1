@@ -20,6 +20,7 @@ public class CoopCamera : MonoBehaviour
     public float targetHeight = 0f;
 
     private Vector3 targetPosition;
+    private Quaternion targetRotation;
 
     private void Start()
     {
@@ -57,32 +58,54 @@ public class CoopCamera : MonoBehaviour
             currentSection.position +
             direction * distance;
 
+        // Aplicar altura adicional al objetivo
+        targetPosition.y += targetHeight;
+
+        targetRotation = rotation;
+
         transform.position = Vector3.Lerp(
             transform.position,
             targetPosition,
             moveSpeed * Time.deltaTime
         );
 
-        transform.rotation = rotation;
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation,
+            targetRotation,
+            moveSpeed * Time.deltaTime
+        );
     }
 
     // ==========================================================
     // CAMBIAR DE SECCIÓN
     // ==========================================================
 
-    public void ChangeSection(Transform newSection)
+    public void ChangeSection(
+        Transform newSection,
+        float newDistance,
+        float newAngleX,
+        float newAngleY,
+        float newTargetHeight
+    )
     {
         if (newSection == null)
             return;
 
         currentSection = newSection;
+
+        distance = newDistance;
+        angleX = newAngleX;
+        angleY = newAngleY;
+        targetHeight = newTargetHeight;
     }
 
     // ==========================================================
     // COLOCAR CÁMARA DIRECTAMENTE
     // ==========================================================
 
-    private void SetCameraImmediately(Transform section)
+    private void SetCameraImmediately(
+        Transform section
+    )
     {
         Quaternion rotation =
             Quaternion.Euler(
@@ -97,6 +120,9 @@ public class CoopCamera : MonoBehaviour
         transform.position =
             section.position +
             direction * distance;
+
+        transform.position +=
+            Vector3.up * targetHeight;
 
         transform.rotation = rotation;
     }

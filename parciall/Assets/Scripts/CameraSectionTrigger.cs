@@ -8,6 +8,12 @@ public class CameraSectionTrigger : MonoBehaviour
     [Header("Siguiente sección")]
     public Transform nextSection;
 
+    [Header("Configuración de cámara para la siguiente sección")]
+    public float distance = 8f;
+    public float angleX = 45f;
+    public float angleY = 45f;
+    public float targetHeight = 0f;
+
     [Header("Jugadores")]
     public Transform[] players;
 
@@ -61,6 +67,12 @@ public class CameraSectionTrigger : MonoBehaviour
 
         sectionActivated = true;
 
-        coopCamera.ChangeSection(nextSection);
+        coopCamera.ChangeSection(
+            nextSection,
+            distance,
+            angleX,
+            angleY,
+            targetHeight
+        );
     }
 }

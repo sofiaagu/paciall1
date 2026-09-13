@@ -781,11 +781,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1184484091864882794, guid: bb1064795d8d2dd41a1ebd2418854ea5, type: 3}
   m_PrefabInstance: {fileID: 1183319046}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &210163082 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9045496882139331226, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
-  m_PrefabInstance: {fileID: 1437593663}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &248469709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468960501}
   - component: {fileID: 468960503}
-  - component: {fileID: 468960502}
+  - component: {fileID: 468960504}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1610,20 +1605,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2107533672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &468960502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 468960500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370494b2989669e40b1082fca1405cdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MecanismoDesafio1
-  tipo: 0
-  manager: {fileID: 0}
 --- !u!65 &468960503
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1645,6 +1626,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &468960504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468960500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b06c9608e87ef458d4ceaa931f4e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CajaObjetivo
+  manager: {fileID: 1330204660}
 --- !u!1 &488500523
 GameObject:
   m_ObjectHideFlags: 0
@@ -4434,10 +4428,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
       insertIndex: -1
       addedObject: {fileID: 468960501}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9045496882139331226, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2107533676}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
 --- !u!1001 &1451598810
 PrefabInstance:
@@ -6987,19 +6978,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
   m_PrefabInstance: {fileID: 1437593663}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2107533676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210163082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b06c9608e87ef458d4ceaa931f4e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CajaObjetivo
-  manager: {fileID: 1330204660}
 --- !u!1001 &2122578634
 PrefabInstance:
   m_ObjectHideFlags: 0

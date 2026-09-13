@@ -6608,9 +6608,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraSectionTrigger
   coopCamera: {fileID: 2004163488}
   nextSection: {fileID: 1650000659}
-  distance: 8
-  angleX: 45
-  angleY: 45
+  distance: 15
+  angleX: 28
+  angleY: 27
   targetHeight: 0
   players:
   - {fileID: 540624830}
@@ -9284,7 +9284,7 @@ Transform:
   m_GameObject: {fileID: 1807340729}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.4, y: 0.81789, z: -0.4}
+  m_LocalPosition: {x: 11.8, y: 2.42, z: 13.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

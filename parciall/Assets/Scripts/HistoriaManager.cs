@@ -7,7 +7,7 @@ public class HistoriaManager : MonoBehaviour
     [System.Serializable]
     public struct LineaDialogo
     {
-        public GameObject globoDialogo; // El objeto Globo (ej. Globo_Milo)
+        public GameObject globoDialogo; // El objeto Globo (ej. Globo_mono)
         public TextMeshProUGUI textoTMP;  // El componente TextMeshPro dentro del globo
         [TextArea(2, 4)]
         public string textoCompleto;    // El texto que aparecerá
@@ -18,8 +18,8 @@ public class HistoriaManager : MonoBehaviour
     public float velocidadEscritura = 0.04f;
 
     [Header("Audio SFX")]
-    public AudioSource audioSourceTuc; // Asigna el AudioSource con el sonido 'tuc'
-    public AudioClip sonidoTuc;        // Tu clip de audio 'tuc' corto
+    public AudioSource audioSourceTuc; 
+    public AudioClip sonidoTuc;        
 
     [Header("UI")]
     public GameObject botonSiguiente;
@@ -27,20 +27,33 @@ public class HistoriaManager : MonoBehaviour
     private int indiceActual = 0;
     private bool estaEscribiendo = false;
 
-    void Start()
+    void OnEnable()
     {
-        // Ocultar todos los globos al iniciar
+        // Se ejecuta cada vez que el panel se activa (Panel 1 o Panel 2)
+        ReiniciarYEmpezar();
+    }
+
+    void ReiniciarYEmpezar()
+    {
+        StopAllCoroutines();
+        indiceActual = 0;
+        estaEscribiendo = false;
+
+        // Limpiar y apagar todos los globos al inicio
         foreach (var linea in lineas)
         {
             if (linea.globoDialogo != null)
                 linea.globoDialogo.SetActive(false);
+
+            if (linea.textoTMP != null)
+                linea.textoTMP.text = ""; // Borra cualquier letra basura como la 'H'
         }
 
         if (botonSiguiente != null)
             botonSiguiente.SetActive(false);
 
-        // Iniciar el primer diálogo
-        if (lineas.Length > 0)
+        // Iniciar el primer diálogo si existen líneas
+        if (lineas != null && lineas.Length > 0)
         {
             StartCoroutine(EscribirLinea(0));
         }
@@ -48,6 +61,16 @@ public class HistoriaManager : MonoBehaviour
 
     public void AvanzarDialogo()
     {
+        if (lineas == null || lineas.Length == 0) return;
+
+        // Si se sobrepasó el índice, activa el botón y sale
+        if (indiceActual >= lineas.Length)
+        {
+            if (botonSiguiente != null)
+                botonSiguiente.SetActive(true);
+            return;
+        }
+
         // Si aún se está escribiendo la frase actual, la completa de golpe
         if (estaEscribiendo)
         {
@@ -72,7 +95,7 @@ public class HistoriaManager : MonoBehaviour
         }
         else
         {
-            // Fin de la historia: Mostrar botón Siguiente para cambiar de escena/pantalla
+            // Fin de la historia de este panel: Mostrar botón Siguiente
             if (botonSiguiente != null)
                 botonSiguiente.SetActive(true);
         }
@@ -86,13 +109,14 @@ public class HistoriaManager : MonoBehaviour
         if (linea.globoDialogo != null)
             linea.globoDialogo.SetActive(true);
 
-        linea.textoTMP.text = "";
+        if (linea.textoTMP != null)
+            linea.textoTMP.text = "";
 
         foreach (char letra in linea.textoCompleto.ToCharArray())
         {
-            linea.textoTMP.text += letra;
+            if (linea.textoTMP != null)
+                linea.textoTMP.text += letra;
 
-            // Reproducir sonido "tuc" si no es un espacio
             if (letra != ' ' && audioSourceTuc != null && sonidoTuc != null)
             {
                 audioSourceTuc.PlayOneShot(sonidoTuc);

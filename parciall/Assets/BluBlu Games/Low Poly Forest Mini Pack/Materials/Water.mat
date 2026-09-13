@@ -155,7 +155,7 @@ Material:
     - _RippleMultiply: 0.16
     - _RippleSlimness: 4
     - _RippleSpeed: 1
-    - _Scale: 6.77
+    - _Scale: 6.42
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -163,8 +163,8 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WaterfallSpeed: 0
-    - _WaveScale: 2
+    - _WaterfallSpeed: -0.02
+    - _WaveScale: 2.26
     - _WaveSpeed: 0.03
     - _WaveStrength: 0.3
     - _WorkflowMode: 1

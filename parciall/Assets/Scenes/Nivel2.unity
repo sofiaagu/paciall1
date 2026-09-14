@@ -4253,7 +4253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraSectionTrigger
   coopCamera: {fileID: 1714583353}
   nextSection: {fileID: 577932567}
-  distance: 15.4
+  minDistance: 8
+  maxDistance: 18
   angleX: 26.3
   angleY: 21.3
   targetHeight: 0
@@ -10926,11 +10927,13 @@ MonoBehaviour:
   - {fileID: 323216756}
   - {fileID: 1621015132}
   currentSection: {fileID: 911906169}
-  distance: 17.4
   angleX: 23.9
   angleY: 18.7
-  moveSpeed: 0.69
   targetHeight: 0
+  minDistance: 8
+  maxDistance: 20
+  maxPlayerSpread: 15
+  moveSpeed: 0.69
 --- !u!1001 &1717889240
 PrefabInstance:
   m_ObjectHideFlags: 0

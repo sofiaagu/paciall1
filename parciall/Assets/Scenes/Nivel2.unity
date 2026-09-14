@@ -1580,7 +1580,7 @@ Transform:
   m_GameObject: {fileID: 228554844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.11119631, z: -0, w: 0.9937985}
-  m_LocalPosition: {x: 15.7, y: 5.8, z: 33.5}
+  m_LocalPosition: {x: 18.62, y: 5.8, z: 41.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1979,7 +1979,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2730140482163398680, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3612178723412759833, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_Name
@@ -1987,7 +1987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3612178723412759833, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Venado
       objectReference: {fileID: 0}
     - target: {fileID: 5284438630408794640, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_Interpolate
@@ -2039,19 +2039,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5514225246966930417, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6218639626697050362, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6344195087049132424, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7828392859508754947, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: 'Venado '
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2069,6 +2069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 294356038}
     m_Modifications:
+    - target: {fileID: 3738831844614934214, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.6127572
@@ -2083,11 +2087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.12
+      value: -33.48
       objectReference: {fileID: 0}
     - target: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.02
+      value: -0.17
       objectReference: {fileID: 0}
     - target: {fileID: 8557929808466616352, guid: d19960a452024f344b855bb8ea7c0d15, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4253,8 +4257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraSectionTrigger
   coopCamera: {fileID: 1714583353}
   nextSection: {fileID: 577932567}
-  minDistance: 8
-  maxDistance: 18
+  distance: 8
   angleX: 26.3
   angleY: 21.3
   targetHeight: 0
@@ -4770,7 +4773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 136472702267107992, guid: ea000d8e109518b4d904a79588adafb4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -54.78
+      value: -58.27
       objectReference: {fileID: 0}
     - target: {fileID: 136472702267107992, guid: ea000d8e109518b4d904a79588adafb4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5816,7 +5819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 317248090511566141, guid: 38dc92bbbacc7c148af156dbfbd95c00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.529999
+      value: 19.14
       objectReference: {fileID: 0}
     - target: {fileID: 317248090511566141, guid: 38dc92bbbacc7c148af156dbfbd95c00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10577,7 +10580,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5227212301356475592, guid: 68e8507832aa6c741b503ea4ac6e4892, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8
+      value: -4.01
       objectReference: {fileID: 0}
     - target: {fileID: 5227212301356475592, guid: 68e8507832aa6c741b503ea4ac6e4892, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10585,7 +10588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5227212301356475592, guid: 68e8507832aa6c741b503ea4ac6e4892, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -2.63
       objectReference: {fileID: 0}
     - target: {fileID: 5227212301356475592, guid: 68e8507832aa6c741b503ea4ac6e4892, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10927,13 +10930,11 @@ MonoBehaviour:
   - {fileID: 323216756}
   - {fileID: 1621015132}
   currentSection: {fileID: 911906169}
+  distance: 16.4
   angleX: 23.9
   angleY: 18.7
-  targetHeight: 0
-  minDistance: 8
-  maxDistance: 20
-  maxPlayerSpread: 15
   moveSpeed: 0.69
+  targetHeight: 0
 --- !u!1001 &1717889240
 PrefabInstance:
   m_ObjectHideFlags: 0

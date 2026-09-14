@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6563403666258995738}
   - component: {fileID: 7834644086321718719}
   - component: {fileID: 5430998105141203317}
+  - component: {fileID: 2039448528096714096}
   m_Layer: 0
   m_Name: SM_Thorn_02
   m_TagString: Untagged
@@ -121,7 +122,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2039448528096714096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5791123829546643616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69de97b1e52f0874dbd0889b72fd4a79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HazarZone
+  delayReinicio: 0.5
+  tagsJugadores:
+  - Mono
+  - Paloma
+  - Serpiente
+  - Venado
+  - Player
+  - Caja
 --- !u!1 &7848595127237786626
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5474347241295209613}
-  - component: {fileID: 2781604976274182636}
+  - component: {fileID: 7359590275740138175}
   m_Layer: 0
   m_Name: UCX_SM_Thorn_04_B_01
   m_TagString: Untagged
@@ -154,8 +176,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1984293716183054263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2781604976274182636
-MeshCollider:
+--- !u!65 &7359590275740138175
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -169,10 +191,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4101431393630859317, guid: 8b379422ee632ff4198836196771f28b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 6.1664734, y: 1.9062393, z: 4.3177457}
+  m_Center: {x: 0.36203623, y: 0.45311975, z: 0.63134915}

@@ -9012,7 +9012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3612178723412759833, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_TagString
-      value: Mono
+      value: 'Venado '
       objectReference: {fileID: 0}
     - target: {fileID: 5284438630408794640, guid: 235eeacd26ca36744bba3f05675c8313, type: 3}
       propertyPath: m_Interpolate

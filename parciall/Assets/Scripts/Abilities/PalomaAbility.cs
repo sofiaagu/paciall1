@@ -12,27 +12,27 @@ public class PigeonAbility : MonoBehaviour
     public float alturaVuelo = 3f;
     public float duracionSubida = 0.5f;
     public float duracionVuelo = 4f;
-    public float duracionBajada = 0.5f;
+    public float velocidadBajada = 5f;
 
     [Header("Animación")]
     public Animator animator;
 
     private bool isFlying;
 
+    // Altura desde donde despega
+    private float alturaInicial;
+
     private void Awake()
     {
-        // Crear sistema de entrada
         inputActions = new NIS();
 
-        // La paloma utiliza las flechas del teclado
+        // La paloma utiliza las flechas
         inputActions.bindingMask =
             InputBinding.MaskByGroup("Keyboard_arrows");
 
-        // Obtener componentes
         movePlayer = GetComponent<MovePlayer>();
         rb = GetComponent<Rigidbody>();
 
-        // Buscar Animator automáticamente si no se asigna
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
@@ -55,11 +55,11 @@ public class PigeonAbility : MonoBehaviour
 
     private void OnAbility(InputAction.CallbackContext context)
     {
-        // No puede volver a activar el vuelo mientras ya está volando
+        // No puede activar el vuelo mientras ya está volando
         if (isFlying)
             return;
 
-        // Solo puede despegar estando en el suelo
+        // Solo puede despegar desde el suelo
         if (!movePlayer.IsGrounded)
             return;
 
@@ -70,16 +70,31 @@ public class PigeonAbility : MonoBehaviour
     {
         isFlying = true;
 
-        // Desactivar gravedad mientras está volando
+        // ------------------------------------------
+        // GUARDAR ALTURA INICIAL
+        // ------------------------------------------
+
+        alturaInicial = rb.position.y;
+
+        float alturaObjetivo =
+            alturaInicial + alturaVuelo;
+
+        // ------------------------------------------
+        // PREPARAR RIGIDBODY
+        // ------------------------------------------
+
         rb.useGravity = false;
 
-        // Guardar la altura desde donde despega
-        float alturaInicial = rb.position.y;
+        // El movimiento vertical lo controlará
+        // temporalmente esta habilidad.
+        Vector3 velocity = rb.linearVelocity;
+        velocity.y = 0f;
+        rb.linearVelocity = velocity;
 
-        // Calcular la altura máxima
-        float alturaObjetivo = alturaInicial + alturaVuelo;
+        // ------------------------------------------
+        // ANIMACIÓN DE VUELO
+        // ------------------------------------------
 
-        // Activar animación de vuelo
         if (animator != null)
         {
             animator.SetBool("Flying", true);
@@ -96,9 +111,10 @@ public class PigeonAbility : MonoBehaviour
             tiempo += Time.fixedDeltaTime;
 
             float progreso =
-                Mathf.Clamp01(tiempo / duracionSubida);
+                Mathf.Clamp01(
+                    tiempo / duracionSubida
+                );
 
-            // Movimiento suave hacia arriba
             float altura =
                 Mathf.Lerp(
                     alturaInicial,
@@ -106,11 +122,11 @@ public class PigeonAbility : MonoBehaviour
                     progreso
                 );
 
-            Vector3 nuevaPosicion = rb.position;
+            Vector3 posicion = rb.position;
 
-            nuevaPosicion.y = altura;
+            posicion.y = altura;
 
-            rb.MovePosition(nuevaPosicion);
+            rb.MovePosition(posicion);
 
             yield return new WaitForFixedUpdate();
         }
@@ -125,7 +141,6 @@ public class PigeonAbility : MonoBehaviour
         {
             tiempo += Time.fixedDeltaTime;
 
-            // Mantener la paloma en la altura de vuelo
             Vector3 posicion = rb.position;
 
             posicion.y = alturaObjetivo;
@@ -136,46 +151,45 @@ public class PigeonAbility : MonoBehaviour
         }
 
         // ==========================================
-        // 3. DESCENSO
+        // 3. COMENZAR DESCENSO
         // ==========================================
 
-        tiempo = 0f;
+        // Ahora devolvemos la gravedad.
+        rb.useGravity = true;
 
-        while (tiempo < duracionBajada)
+        // Dejamos de controlar directamente la posición.
+        // La física se encargará de bajar y detectar
+        // correctamente el suelo/objetos.
+
+        Vector3 velocidad = rb.linearVelocity;
+
+        velocidad.y = -velocidadBajada;
+
+        rb.linearVelocity = velocidad;
+
+        // ==========================================
+        // ESPERAR ATERRIZAJE
+        // ==========================================
+
+        while (!movePlayer.IsGrounded)
         {
-            tiempo += Time.fixedDeltaTime;
-
-            float progreso =
-                Mathf.Clamp01(tiempo / duracionBajada);
-
-            // Movimiento suave hacia abajo
-            float altura =
-                Mathf.Lerp(
-                    alturaObjetivo,
-                    alturaInicial,
-                    progreso
-                );
-
-            Vector3 nuevaPosicion = rb.position;
-
-            nuevaPosicion.y = altura;
-
-            rb.MovePosition(nuevaPosicion);
-
             yield return new WaitForFixedUpdate();
         }
 
-        // Asegurar que termine exactamente en la altura inicial
-        Vector3 posicionFinal = rb.position;
+        // ==========================================
+        // ATERRIZAJE
+        // ==========================================
 
-        posicionFinal.y = alturaInicial;
+        Vector3 velocidadFinal = rb.linearVelocity;
 
-        rb.MovePosition(posicionFinal);
+        velocidadFinal.y = 0f;
 
-        // Volver a activar la gravedad
-        rb.useGravity = true;
+        rb.linearVelocity = velocidadFinal;
 
-        // Desactivar animación de vuelo
+        // ------------------------------------------
+        // ANIMACIÓN
+        // ------------------------------------------
+
         if (animator != null)
         {
             animator.SetBool("Flying", false);

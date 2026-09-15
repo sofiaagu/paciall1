@@ -11,22 +11,26 @@ public class PigeonAbility : MonoBehaviour
     [Header("Configuración de vuelo")]
     public float alturaVuelo = 3f;
     public float duracionSubida = 0.5f;
-    public float duracionVuelo = 4f;
+    public float tiempoMaximoVuelo = 5f; // Tiempo máximo permitido si no suelta la tecla
     public float velocidadBajada = 5f;
+
+    [Header("Audio de Vuelo")]
+    public AudioClip sonidoAleteo;
+    [Range(0f, 1f)] public float volumenAleteo = 0.7f;
+    private AudioSource emisor3D;
 
     [Header("Animación")]
     public Animator animator;
 
     private bool isFlying;
+    private bool holdsAbilityKey; // Controla si la tecla sigue presionada
 
-    // Altura desde donde despega
     private float alturaInicial;
 
     private void Awake()
     {
         inputActions = new NIS();
 
-        // La paloma utiliza las flechas
         inputActions.bindingMask =
             InputBinding.MaskByGroup("Keyboard_arrows");
 
@@ -37,24 +41,39 @@ public class PigeonAbility : MonoBehaviour
         {
             animator = GetComponentInChildren<Animator>();
         }
+
+        // Configuración del emisor 3D de audio
+        emisor3D = gameObject.AddComponent<AudioSource>();
+        emisor3D.clip = sonidoAleteo;
+        emisor3D.loop = true;          // Aleteo continuo en vuelo
+        emisor3D.spatialBlend = 1f;    // 100% 3D
+        emisor3D.minDistance = 1f;
+        emisor3D.maxDistance = 15f;
+        emisor3D.volume = volumenAleteo;
     }
 
     private void OnEnable()
     {
         inputActions.Player.Enable();
 
-        inputActions.Player.Ability.performed += OnAbility;
+        // Presionar la tecla
+        inputActions.Player.Ability.performed += OnAbilityStarted;
+        // Soltar la tecla
+        inputActions.Player.Ability.canceled += OnAbilityCanceled;
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Ability.performed -= OnAbility;
+        inputActions.Player.Ability.performed -= OnAbilityStarted;
+        inputActions.Player.Ability.canceled -= OnAbilityCanceled;
 
         inputActions.Player.Disable();
     }
 
-    private void OnAbility(InputAction.CallbackContext context)
+    private void OnAbilityStarted(InputAction.CallbackContext context)
     {
+        holdsAbilityKey = true;
+
         // No puede activar el vuelo mientras ya está volando
         if (isFlying)
             return;
@@ -66,18 +85,32 @@ public class PigeonAbility : MonoBehaviour
         StartCoroutine(Fly());
     }
 
+    private void OnAbilityCanceled(InputAction.CallbackContext context)
+    {
+        holdsAbilityKey = false; // El jugador soltó la tecla
+    }
+
     private IEnumerator Fly()
     {
         isFlying = true;
+
+        // ------------------------------------------
+        // REPRODUCIR AUDIO DE ALETEO
+        // ------------------------------------------
+
+        if (sonidoAleteo != null && emisor3D != null)
+        {
+            emisor3D.clip = sonidoAleteo;
+            emisor3D.volume = volumenAleteo;
+            emisor3D.Play();
+        }
 
         // ------------------------------------------
         // GUARDAR ALTURA INICIAL
         // ------------------------------------------
 
         alturaInicial = rb.position.y;
-
-        float alturaObjetivo =
-            alturaInicial + alturaVuelo;
+        float alturaObjetivo = alturaInicial + alturaVuelo;
 
         // ------------------------------------------
         // PREPARAR RIGIDBODY
@@ -108,43 +141,37 @@ public class PigeonAbility : MonoBehaviour
 
         while (tiempo < duracionSubida)
         {
+            // Si el jugador suelta el botón durante la subida, interrumpe el ascenso
+            if (!holdsAbilityKey)
+                break;
+
             tiempo += Time.fixedDeltaTime;
 
-            float progreso =
-                Mathf.Clamp01(
-                    tiempo / duracionSubida
-                );
-
-            float altura =
-                Mathf.Lerp(
-                    alturaInicial,
-                    alturaObjetivo,
-                    progreso
-                );
+            float progreso = Mathf.Clamp01(tiempo / duracionSubida);
+            float altura = Mathf.Lerp(alturaInicial, alturaObjetivo, progreso);
 
             Vector3 posicion = rb.position;
-
             posicion.y = altura;
-
             rb.MovePosition(posicion);
 
             yield return new WaitForFixedUpdate();
         }
 
         // ==========================================
-        // 2. MANTENERSE VOLANDO
+        // 2. MANTENERSE VOLANDO MIENTRAS MANTENGA PRESIONADO
         // ==========================================
 
-        tiempo = 0f;
+        float tiempoVueloActual = 0f;
 
-        while (tiempo < duracionVuelo)
+        // Se mantiene arriba mientras siga presionando la tecla
+        // y no haya alcanzado el tiempo máximo permitido
+        while (holdsAbilityKey && tiempoVueloActual < tiempoMaximoVuelo)
         {
-            tiempo += Time.fixedDeltaTime;
+            tiempoVueloActual += Time.fixedDeltaTime;
 
             Vector3 posicion = rb.position;
-
-            posicion.y = alturaObjetivo;
-
+            // Mantiene la altura alcanzada
+            posicion.y = rb.position.y;
             rb.MovePosition(posicion);
 
             yield return new WaitForFixedUpdate();
@@ -154,7 +181,7 @@ public class PigeonAbility : MonoBehaviour
         // 3. COMENZAR DESCENSO
         // ==========================================
 
-        // Ahora devolvemos la gravedad.
+
         rb.useGravity = true;
 
         // Dejamos de controlar directamente la posición.
@@ -177,14 +204,19 @@ public class PigeonAbility : MonoBehaviour
         }
 
         // ==========================================
-        // ATERRIZAJE
+        // ATERRIZAJE Y DETENCIÓN DEL AUDIO
         // ==========================================
 
         Vector3 velocidadFinal = rb.linearVelocity;
 
         velocidadFinal.y = 0f;
-
         rb.linearVelocity = velocidadFinal;
+
+        // Detener sonido de aleteo al tocar el suelo
+        if (emisor3D != null && emisor3D.isPlaying)
+        {
+            emisor3D.Stop();
+        }
 
         // ------------------------------------------
         // ANIMACIÓN

@@ -5,11 +5,11 @@ public class MovePlayer : MonoBehaviour
 {
     private NIS inputActions;
 
-    [Header("Configuración")]
+    [Header("ConfiguraciÃ³n")]
     public float speed = 5f;
     public float fuerzaSalto = 5f;
 
-    [Header("Rotación")]
+    [Header("RotaciÃ³n")]
     public float rotationSpeed = 720f;
 
     [Header("Control Scheme")]
@@ -35,8 +35,10 @@ public class MovePlayer : MonoBehaviour
     {
         inputActions = new NIS();
 
-        inputActions.bindingMask =
-            InputBinding.MaskByGroup(controlScheme);
+        if (inputActions != null)
+        {
+            inputActions.bindingMask = InputBinding.MaskByGroup(controlScheme);
+        }
 
         rb = GetComponent<Rigidbody>();
         playerCollider = GetComponent<Collider>();
@@ -46,39 +48,42 @@ public class MovePlayer : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
-        // El jugador solo puede rotar mediante el código.
-        rb.constraints =
-            RigidbodyConstraints.FreezeRotationX |
-            RigidbodyConstraints.FreezeRotationZ;
+        if (rb != null)
+        {
+            // El jugador solo puede rotar mediante el cÃ³digo.
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
-        rb.interpolation =
-            RigidbodyInterpolation.Interpolate;
-
-        rb.collisionDetectionMode =
-            CollisionDetectionMode.Continuous;
-
-        // Evita que las colisiones produzcan giros físicos.
-        rb.angularDamping = 100f;
+            // Evita que las colisiones produzcan giros fÃ­sicos.
+            rb.angularDamping = 100f;
+        }
     }
 
     private void OnEnable()
     {
-        inputActions.Player.Enable();
+        if (inputActions != null)
+        {
+            inputActions.Player.Enable();
 
-        inputActions.Player.Move.performed += OnMove;
-        inputActions.Player.Move.canceled += OnMove;
+            inputActions.Player.Move.performed += OnMove;
+            inputActions.Player.Move.canceled += OnMove;
 
-        inputActions.Player.Jump.performed += OnJump;
+            inputActions.Player.Jump.performed += OnJump;
+        }
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Move.performed -= OnMove;
-        inputActions.Player.Move.canceled -= OnMove;
+        if (inputActions != null)
+        {
+            inputActions.Player.Move.performed -= OnMove;
+            inputActions.Player.Move.canceled -= OnMove;
 
-        inputActions.Player.Jump.performed -= OnJump;
+            inputActions.Player.Jump.performed -= OnJump;
 
-        inputActions.Player.Disable();
+            inputActions.Player.Disable();
+        }
     }
 
     private void OnMove(InputAction.CallbackContext value)
@@ -88,32 +93,30 @@ public class MovePlayer : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        if (!isGrounded)
+        if (!isGrounded || rb == null)
             return;
 
         Vector3 velocity = rb.linearVelocity;
-
         velocity.y = 0f;
 
         rb.linearVelocity = velocity;
 
-        rb.AddForce(
-            Vector3.up * fuerzaSalto,
-            ForceMode.Impulse
-        );
+        rb.AddForce(Vector3.up * fuerzaSalto, ForceMode.Impulse);
 
         if (animator != null)
         {
             animator.SetTrigger("Jump");
         }
 
-        Debug.Log(gameObject.name + " saltó");
+        Debug.Log(gameObject.name + " saltÃ³");
     }
 
     private void FixedUpdate()
     {
+        if (rb == null) return;
+
         // ============================================
-        // ELIMINAR ROTACIÓN PRODUCIDA POR COLISIONES
+        // ELIMINAR ROTACIÃ“N PRODUCIDA POR COLISIONES
         // ============================================
 
         rb.angularVelocity = Vector3.zero;
@@ -128,10 +131,7 @@ public class MovePlayer : MonoBehaviour
             moveInput.y
         );
 
-        movement = Vector3.ClampMagnitude(
-            movement,
-            1f
-        );
+        movement = Vector3.ClampMagnitude(movement, 1f);
 
         Vector3 velocity = rb.linearVelocity;
 
@@ -150,29 +150,26 @@ public class MovePlayer : MonoBehaviour
         rb.linearVelocity = velocity;
 
         // ============================================
-        // ROTACIÓN CONTROLADA POR EL JUGADOR
+        // ROTACIÃ“N CONTROLADA POR EL JUGADOR
         // ============================================
 
         if (movement.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(
-                    movement,
-                    Vector3.up
-                );
+            Quaternion targetRotation = Quaternion.LookRotation(
+                movement,
+                Vector3.up
+            );
 
-            Quaternion newRotation =
-                Quaternion.RotateTowards(
-                    rb.rotation,
-                    targetRotation,
-                    rotationSpeed *
-                    Time.fixedDeltaTime
-                );
+            Quaternion newRotation = Quaternion.RotateTowards(
+                rb.rotation,
+                targetRotation,
+                rotationSpeed * Time.fixedDeltaTime
+            );
 
             rb.MoveRotation(newRotation);
         }
 
-        // Asegurar que nunca quede rotación física.
+        // Asegurar que nunca quede rotaciÃ³n fÃ­sica.
         rb.angularVelocity = Vector3.zero;
     }
 
@@ -187,23 +184,20 @@ public class MovePlayer : MonoBehaviour
         if (playerCollider == null)
             return;
 
-        Bounds bounds =
-            playerCollider.bounds;
+        Bounds bounds = playerCollider.bounds;
 
-        Vector3 groundCheckPosition =
-            new Vector3(
-                bounds.center.x,
-                bounds.min.y + groundCheckDistance,
-                bounds.center.z
-            );
+        Vector3 groundCheckPosition = new Vector3(
+            bounds.center.x,
+            bounds.min.y + groundCheckDistance,
+            bounds.center.z
+        );
 
-        isGrounded =
-            Physics.CheckSphere(
-                groundCheckPosition,
-                groundCheckRadius,
-                groundLayer,
-                QueryTriggerInteraction.Ignore
-            );
+        isGrounded = Physics.CheckSphere(
+            groundCheckPosition,
+            groundCheckRadius,
+            groundLayer,
+            QueryTriggerInteraction.Ignore
+        );
     }
 
     private void UpdateAnimations()
@@ -211,46 +205,31 @@ public class MovePlayer : MonoBehaviour
         if (animator == null)
             return;
 
-        float movementAmount =
-            moveInput.magnitude;
+        float movementAmount = moveInput.magnitude;
 
-        animator.SetFloat(
-            "Speed",
-            movementAmount
-        );
-
-        animator.SetBool(
-            "Grounded",
-            isGrounded
-        );
+        animator.SetFloat("Speed", movementAmount);
+        animator.SetBool("Grounded", isGrounded);
     }
 
     private void OnDrawGizmosSelected()
     {
         if (playerCollider == null)
         {
-            playerCollider =
-                GetComponent<Collider>();
+            playerCollider = GetComponent<Collider>();
         }
 
         if (playerCollider == null)
             return;
 
-        Bounds bounds =
-            playerCollider.bounds;
+        Bounds bounds = playerCollider.bounds;
 
-        Vector3 groundCheckPosition =
-            new Vector3(
-                bounds.center.x,
-                bounds.min.y + groundCheckDistance,
-                bounds.center.z
-            );
+        Vector3 groundCheckPosition = new Vector3(
+            bounds.center.x,
+            bounds.min.y + groundCheckDistance,
+            bounds.center.z
+        );
 
         Gizmos.color = Color.yellow;
-
-        Gizmos.DrawWireSphere(
-            groundCheckPosition,
-            groundCheckRadius
-        );
+        Gizmos.DrawWireSphere(groundCheckPosition, groundCheckRadius);
     }
 }

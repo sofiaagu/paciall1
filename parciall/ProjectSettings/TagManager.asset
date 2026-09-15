@@ -10,6 +10,7 @@ TagManager:
   - Paloma
   - Caja
   - Venado
+  - Ground
   layers:
   - Default
   - TransparentFX

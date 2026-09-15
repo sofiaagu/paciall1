@@ -4,13 +4,18 @@ public class MonoPosicionDesafio2 : MonoBehaviour
 {
     public Desafio2Manager manager;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Mono"))
         {
             manager.monoEnPosicion = true;
 
-            Debug.Log("🐒 El mono está en su posición");
+            Debug.Log("El mono está en su posición");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 
@@ -20,7 +25,7 @@ public class MonoPosicionDesafio2 : MonoBehaviour
         {
             manager.monoEnPosicion = false;
 
-            Debug.Log("🐒 El mono salió de su posición");
+            Debug.Log("El mono salió de su posición");
         }
     }
 }

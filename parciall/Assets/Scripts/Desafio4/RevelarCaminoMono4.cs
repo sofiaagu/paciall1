@@ -7,6 +7,8 @@ public class RevelarCaminoMono4 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -26,6 +28,9 @@ public class RevelarCaminoMono4 : MonoBehaviour
             }
         }
 
-        Debug.Log("🐒 El Mono reveló la primera parte del camino");
+        Debug.Log("El Mono reveló la primera parte del camino");
+
+        if (sonidoActivacion != null)
+            sonidoActivacion.Play();
     }
 }

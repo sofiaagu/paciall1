@@ -7,6 +7,8 @@ public class MecanismoSerpiente3 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -21,7 +23,10 @@ public class MecanismoSerpiente3 : MonoBehaviour
                 plataforma.DetenerPlataforma();
             }
 
-            Debug.Log("🐍 La Serpiente activó el mecanismo");
+            Debug.Log("La Serpiente activó el mecanismo");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

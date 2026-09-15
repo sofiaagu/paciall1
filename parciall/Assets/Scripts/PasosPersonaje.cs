@@ -3,7 +3,7 @@ using UnityEngine;
 public class PasosPersonaje : MonoBehaviour
 {
     public AudioClip sonidoPaso;
-    [Range(0f, 1f)] public float volumen = 0.5f;
+    [Range(0f, 1f)] public float volumen = 1f;
     public float tiempoEntrePasos = 0.4f;
 
     private AudioSource emisor3D;
@@ -13,7 +13,7 @@ public class PasosPersonaje : MonoBehaviour
     private void Start()
     {
         emisor3D = gameObject.AddComponent<AudioSource>();
-        emisor3D.spatialBlend = 1f; // Sonido 3D
+        emisor3D.spatialBlend = 0f; // Sonido 3D
         emisor3D.minDistance = 1f;
         emisor3D.maxDistance = 15f;
 

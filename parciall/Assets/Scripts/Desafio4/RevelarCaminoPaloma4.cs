@@ -6,6 +6,7 @@ public class RevelarCaminoPaloma4 : MonoBehaviour
     public GameObject[] piedras;
 
     private bool activado = false;
+    public AudioSource sonidoActivacion;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,6 +26,8 @@ public class RevelarCaminoPaloma4 : MonoBehaviour
             }
         }
 
-        Debug.Log("🕊️ La Paloma reveló la segunda parte del camino");
+        Debug.Log("La Paloma reveló la segunda parte del camino");
+        if (sonidoActivacion != null)
+            sonidoActivacion.Play();
     }
 }

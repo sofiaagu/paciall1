@@ -5,12 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Escalera
-  - Mono
-  - Serpiente
-  - Paloma
   - Caja
-  - Venado
   - Ground
+  - Paloma
+  - Serpiente
+  - Mono
+  - Venado
   layers:
   - Default
   - TransparentFX

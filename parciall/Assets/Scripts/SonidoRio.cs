@@ -4,7 +4,7 @@ public class SonidoRio : MonoBehaviour
 {
     [Header("Configuración del Río")]
     public AudioClip sonidoAgua;
-    [Range(0f, 1f)] public float volumen = 0.6f;
+    [Range(0f, 1f)] public float volumen = 0.8f;
 
     [Header("Ajustes 3D Espaciales")]
     public float distanciaMinima = 2f;  // Se escucha al 100% al estar muy cerca

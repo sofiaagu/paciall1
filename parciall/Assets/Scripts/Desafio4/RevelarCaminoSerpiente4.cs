@@ -7,6 +7,8 @@ public class RevelarCaminoSerpiente4 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -25,6 +27,8 @@ public class RevelarCaminoSerpiente4 : MonoBehaviour
             }
         }
 
-        Debug.Log("🐍 La Serpiente reveló la última parte del camino");
+        Debug.Log("La Serpiente reveló la última parte del camino");
+        if (sonidoActivacion != null)
+            sonidoActivacion.Play();
     }
 }

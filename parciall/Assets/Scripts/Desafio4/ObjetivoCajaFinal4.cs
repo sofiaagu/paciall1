@@ -12,6 +12,8 @@ public class ObjetivoCajaFinal4 : MonoBehaviour
 
     private bool completado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (completado)
@@ -30,11 +32,14 @@ public class ObjetivoCajaFinal4 : MonoBehaviour
                 llave.SetActive(true);
             }
 
-            Debug.Log("📦 La caja llegó al final");
-            Debug.Log("🔑 ¡Apareció la llave!");
+            Debug.Log("La caja llegó al final");
+            Debug.Log("¡Apareció la llave!");
 
             // Iniciar la secuencia de la jaula y cambio de escena
             StartCoroutine(SecuenciaFinal());
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 
@@ -48,12 +53,12 @@ public class ObjetivoCajaFinal4 : MonoBehaviour
             jaula.SetActive(false);
         }
 
-        Debug.Log("🔓 ¡La jaula desapareció!");
+        Debug.Log("¡La jaula desapareció!");
 
         // 2. Esperar otros 2 segundos y cargar la escena Final
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("🎬 Cargando escena Final...");
+        Debug.Log("Cargando escena Final...");
         SceneManager.LoadScene("Final");
     }
 }

@@ -15,6 +15,8 @@ public class MecanismoDesafio1 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -26,6 +28,9 @@ public class MecanismoDesafio1 : MonoBehaviour
             manager.monoActivo = true;
 
             Debug.Log("Mono activó su mecanismo");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
 
         if (tipo == TipoMecanismo.Paloma && other.CompareTag("Paloma"))
@@ -34,6 +39,8 @@ public class MecanismoDesafio1 : MonoBehaviour
             manager.palomaActiva = true;
 
             Debug.Log("Paloma activó su mecanismo");
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
 
         if (tipo == TipoMecanismo.Serpiente && other.CompareTag("Serpiente"))
@@ -42,6 +49,9 @@ public class MecanismoDesafio1 : MonoBehaviour
             manager.serpienteActiva = true;
 
             Debug.Log("Serpiente activó su mecanismo");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

@@ -7,6 +7,8 @@ public class MecanismoVenado3 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -24,7 +26,9 @@ public class MecanismoVenado3 : MonoBehaviour
                 plataforma.DetenerPlataforma();
             }
 
-            Debug.Log("🦌 El Venado activó el mecanismo");
+            Debug.Log("El Venado activó el mecanismo");
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

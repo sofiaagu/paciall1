@@ -3,6 +3,7 @@ using UnityEngine;
 public class CajaObjetivo : MonoBehaviour
 {
     public Desafio1Manager manager;
+    public AudioSource sonidoActivacion;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,6 +12,9 @@ public class CajaObjetivo : MonoBehaviour
             manager.cajaEnPosicion = true;
 
             Debug.Log("La caja está en la posición correcta");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 

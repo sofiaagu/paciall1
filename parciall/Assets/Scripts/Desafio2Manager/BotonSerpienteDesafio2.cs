@@ -6,6 +6,8 @@ public class BotonSerpienteDesafio2 : MonoBehaviour
 
     private bool activado = false;
 
+    public AudioSource sonidoActivacion;
+
     private void OnTriggerEnter(Collider other)
     {
         if (activado)
@@ -17,7 +19,10 @@ public class BotonSerpienteDesafio2 : MonoBehaviour
 
             manager.EstabilizarPuente();
 
-            Debug.Log("🐍 La serpiente presionó el botón");
+            Debug.Log("La serpiente presionó el botón");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

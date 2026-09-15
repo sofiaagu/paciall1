@@ -4,6 +4,7 @@ public class MecanismoMono3 : MonoBehaviour
 {
     [Header("Plataforma que controla")]
     public PlataformaMovimiento3 plataforma;
+    public AudioSource sonidoActivacion;
 
     private bool activado = false;
 
@@ -21,7 +22,10 @@ public class MecanismoMono3 : MonoBehaviour
                 plataforma.DetenerPlataforma();
             }
 
-            Debug.Log("🐒 El Mono activó el mecanismo");
+            Debug.Log("El Mono activó el mecanismo");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

@@ -121,16 +121,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""66856492-d0c2-4806-9c11-9980ebc21c60"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false,
-                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -280,7 +270,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""976d410e-1627-40b2-86e3-84b71ba20293"",
-                    ""path"": ""<Keyboard>/8"",
+                    ""path"": ""<Keyboard>/numpad8"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -291,7 +281,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""9443d80d-f5db-4ebf-b95c-2a41a35fa8c6"",
-                    ""path"": ""<Keyboard>/5"",
+                    ""path"": ""<Keyboard>/numpad5"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -302,7 +292,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""e0f30de0-634d-46af-a9ce-652b21c894b7"",
-                    ""path"": ""<Keyboard>/4"",
+                    ""path"": ""<Keyboard>/numpad4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -313,7 +303,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""9d7538f3-450b-4a44-b391-d29b6d629519"",
-                    ""path"": ""<Keyboard>/6"",
+                    ""path"": ""<Keyboard>/numpad6"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -357,7 +347,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7251d23a-ccb7-4e6c-aea9-be213f3567b0"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -401,7 +391,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e9ddf455-6e90-4be4-b01f-c425c9db7c21"",
-                    ""path"": ""<Keyboard>/y"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -417,61 +407,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard_Arrows;Gamepad"",
                     ""action"": ""Ability"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bc127e79-1a79-4e4c-934c-fa61bb034320"",
-                    ""path"": ""<Keyboard>/rightShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard_Arrows"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cb46d6b4-53bb-44ba-a6eb-68929cddd129"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard_WASD"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4e1584d8-d628-4ff8-863d-d5977b4aa848"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6974c830-588a-48ce-b76b-3da057c0cd47"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Mouse"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a330b985-1ca1-4421-9077-bf8358a35191"",
-                    ""path"": ""<Keyboard>/numpadMinus"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Numpad"",
-                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -541,7 +476,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@NIS()
@@ -625,7 +559,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Ability;
-    private readonly InputAction m_Player_Interact;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -649,10 +582,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Ability".
         /// </summary>
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Interact".
-        /// </summary>
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -688,9 +617,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
             @Ability.started += instance.OnAbility;
             @Ability.performed += instance.OnAbility;
             @Ability.canceled += instance.OnAbility;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
         }
 
         /// <summary>
@@ -711,9 +637,6 @@ public partial class @NIS: IInputActionCollection2, IDisposable
             @Ability.started -= instance.OnAbility;
             @Ability.performed -= instance.OnAbility;
             @Ability.canceled -= instance.OnAbility;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
         }
 
         /// <summary>
@@ -840,12 +763,5 @@ public partial class @NIS: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAbility(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnInteract(InputAction.CallbackContext context);
     }
 }

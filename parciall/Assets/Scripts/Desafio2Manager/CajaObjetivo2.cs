@@ -4,13 +4,14 @@ public class CajaObjetivo2 : MonoBehaviour
 {
     public Desafio2Manager manager;
 
+    public AudioSource sonidoActivacion;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Caja"))
         {
             manager.cajaEnPosicion = true;
 
-            Debug.Log("📦 La caja está en la posición del desafío 2");
+            Debug.Log("La caja está en la posición del desafío 2");
         }
     }
 
@@ -20,7 +21,10 @@ public class CajaObjetivo2 : MonoBehaviour
         {
             manager.cajaEnPosicion = false;
 
-            Debug.Log("📦 La caja salió de la posición");
+            Debug.Log("La caja salió de la posición");
+
+            if (sonidoActivacion != null)
+                sonidoActivacion.Play();
         }
     }
 }

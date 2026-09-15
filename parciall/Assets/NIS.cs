@@ -357,7 +357,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7251d23a-ccb7-4e6c-aea9-be213f3567b0"",
-                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",

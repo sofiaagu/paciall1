@@ -280,7 +280,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""976d410e-1627-40b2-86e3-84b71ba20293"",
-                    ""path"": ""<Keyboard>/numpad8"",
+                    ""path"": ""<Keyboard>/8"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -291,7 +291,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""9443d80d-f5db-4ebf-b95c-2a41a35fa8c6"",
-                    ""path"": ""<Keyboard>/numpad5"",
+                    ""path"": ""<Keyboard>/5"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -302,7 +302,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""e0f30de0-634d-46af-a9ce-652b21c894b7"",
-                    ""path"": ""<Keyboard>/numpad4"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -313,7 +313,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""9d7538f3-450b-4a44-b391-d29b6d629519"",
-                    ""path"": ""<Keyboard>/numpad6"",
+                    ""path"": ""<Keyboard>/6"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -357,7 +357,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7251d23a-ccb7-4e6c-aea9-be213f3567b0"",
-                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""path"": ""<Keyboard>/u"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",
@@ -401,7 +401,7 @@ public partial class @NIS: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e9ddf455-6e90-4be4-b01f-c425c9db7c21"",
-                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Numpad"",

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement; // Necesario para cambiar de escena
 
 public class ObjetivoCajaFinal4 : MonoBehaviour
 {
@@ -32,13 +33,14 @@ public class ObjetivoCajaFinal4 : MonoBehaviour
             Debug.Log("📦 La caja llegó al final");
             Debug.Log("🔑 ¡Apareció la llave!");
 
-            // Esperar 2 segundos y desaparecer la jaula
-            StartCoroutine(DesaparecerJaula());
+            // Iniciar la secuencia de la jaula y cambio de escena
+            StartCoroutine(SecuenciaFinal());
         }
     }
 
-    private IEnumerator DesaparecerJaula()
+    private IEnumerator SecuenciaFinal()
     {
+        // 1. Esperar 2 segundos y desaparecer la jaula
         yield return new WaitForSeconds(2f);
 
         if (jaula != null)
@@ -47,5 +49,11 @@ public class ObjetivoCajaFinal4 : MonoBehaviour
         }
 
         Debug.Log("🔓 ¡La jaula desapareció!");
+
+        // 2. Esperar otros 2 segundos y cargar la escena Final
+        yield return new WaitForSeconds(2f);
+
+        Debug.Log("🎬 Cargando escena Final...");
+        SceneManager.LoadScene("Final");
     }
 }

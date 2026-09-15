@@ -86,9 +86,14 @@ public class VenadoEmpujar : MonoBehaviour
 
             if (cajaRb != null)
             {
+                // Despierta la física si la caja se durmió al quedarse quieta
+                if (cajaRb.IsSleeping())
+                {
+                    cajaRb.WakeUp();
+                }
+
                 // Dirección hacia donde mira el venado
-                Vector3 direccion =
-                    transform.forward;
+                Vector3 direccion = transform.forward;
 
                 // Empuje continuo
                 cajaRb.AddForce(

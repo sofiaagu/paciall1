@@ -14,6 +14,10 @@ public class HazarZone : MonoBehaviour
     [Tooltip("Arrastra aquí el SpawnPoint activo.")]
     public Transform currentRespawnPoint;
 
+    [Header("Audio de Caída / Muerte")]
+    public AudioClip sonidoCaida;
+    [Range(0f, 1f)] public float volumenCaida = 0.8f;
+
     private bool procesandoCaida = false;
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +28,13 @@ public class HazarZone : MonoBehaviour
         if (EsObjetoValido(other.gameObject))
         {
             procesandoCaida = true;
+
+            // Reproduce el sonido 3D en el punto exacto de la caída antes de respawnear
+            if (sonidoCaida != null)
+            {
+                AudioSource.PlayClipAtPoint(sonidoCaida, other.transform.position, volumenCaida);
+            }
+
             Debug.Log($"⚠️ {other.gameObject.name} cayó en un área peligrosa ({gameObject.name}). Teletransportando...");
             StartCoroutine(TeletransportarRutina(other.gameObject));
         }
@@ -60,7 +71,7 @@ public class HazarZone : MonoBehaviour
             Rigidbody rb = targetTransform.GetComponent<Rigidbody>();
 
             // 3. Desactivamos CharacterController temporalmente si existe
-            if (cc != null) 
+            if (cc != null)
             {
                 cc.enabled = false;
             }
@@ -80,7 +91,7 @@ public class HazarZone : MonoBehaviour
             targetTransform.rotation = currentRespawnPoint.rotation;
 
             // 6. Reactivar CharacterController si existía
-            if (cc != null) 
+            if (cc != null)
             {
                 cc.enabled = true;
             }

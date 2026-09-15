@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class CajaObjetivo3 : MonoBehaviour
+public class MecanismoVenado3 : MonoBehaviour
 {
-    [Header("Plataforma que se detiene")]
+    [Header("Plataforma que controla")]
     public PlataformaMovimiento3 plataforma;
 
     private bool activado = false;
@@ -12,7 +12,10 @@ public class CajaObjetivo3 : MonoBehaviour
         if (activado)
             return;
 
-        if (other.CompareTag("Caja"))
+        // Busca el script del Venado en el objeto o en sus padres
+        VenadoEmpujar venado = other.GetComponentInParent<VenadoEmpujar>();
+
+        if (venado != null)
         {
             activado = true;
 
@@ -21,8 +24,7 @@ public class CajaObjetivo3 : MonoBehaviour
                 plataforma.DetenerPlataforma();
             }
 
-            Debug.Log("📦 La caja llegó a su posición");
-            Debug.Log("🦌 El Venado completó su parte");
+            Debug.Log("🦌 El Venado activó el mecanismo");
         }
     }
 }
